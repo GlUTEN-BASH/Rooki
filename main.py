@@ -116,7 +116,6 @@ while running:
         ret, frame = cap.read()
         
         H, W, _ = frame.shape
-
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
         
@@ -164,6 +163,7 @@ while running:
         frame_py = np.rot90(frame_py)
         fra = pygame.surfarray.make_surface(frame_py)
         fra = pygame.transform.flip(fra, True, False) 
+        fra = pygame.transform.scale(fra, (640, 480)) 
         screen.blit(fra, (0,0))
 
         for event in pygame.event.get():
