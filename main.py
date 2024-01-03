@@ -44,7 +44,7 @@ letcount = 0
 word = 0
 letf = 0
 progress = []
-
+fl = False
 astra = (197, 121, 255)
 astratext = (197, 255, 100)
 white = (255, 255, 255)
@@ -83,6 +83,8 @@ while settings:
                     camnum = 5
                 case pygame.K_a:
                     theme = 1
+                case pygame.K_f:
+                    fl = True
                 case pygame.K_ESCAPE:
                     settings = False
                     running = True
@@ -90,6 +92,7 @@ while settings:
     screen.fill(back)
     screen.blit(my_font.render('0 - 5 - Выбор камеры', False, (text)), (0, 0)) 
     screen.blit(my_font.render('Нажмите ESC для продолжения', False, (text)), (0, 30))
+    screen.blit(my_font.render('Нажмите F для отзеркаливания', False, (text)), (0, 60))
     pygame.display.flip()
 
 cap = cv2.VideoCapture(camnum)
@@ -162,7 +165,9 @@ while running:
         frame_py = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame_py = np.rot90(frame_py)
         fra = pygame.surfarray.make_surface(frame_py)
-        fra = pygame.transform.flip(fra, True, False) 
+        if fl:
+            fra = pygame.transform.flip(fra, True, False) 
+        
         fra = pygame.transform.scale(fra, (640, 480)) 
         screen.blit(fra, (0,0))
 
