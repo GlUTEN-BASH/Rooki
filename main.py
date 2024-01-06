@@ -418,7 +418,6 @@ while running:
 
         pygame.display.flip()             
     except Exception as e:
-        print(e)
         pass
 
 pygame.quit()
