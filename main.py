@@ -117,7 +117,8 @@ while running:
         y_ = [] 
 
         ret, frame = cap.read()
-        
+        if fl:
+            frame = cv2.flip(frame, 1)         
         H, W, _ = frame.shape
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
@@ -165,10 +166,8 @@ while running:
         frame_py = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame_py = np.rot90(frame_py)
         fra = pygame.surfarray.make_surface(frame_py)
-        if fl:
-            fra = pygame.transform.flip(fra, True, False) 
-        
         fra = pygame.transform.scale(fra, (640, 480)) 
+        fra = pygame.transform.flip(fra, True, False) 
         screen.blit(fra, (0,0))
 
         for event in pygame.event.get():
@@ -403,6 +402,7 @@ while running:
 
         pygame.display.flip()             
     except Exception as e:
+        print(e)
         pass
 
 pygame.quit()
