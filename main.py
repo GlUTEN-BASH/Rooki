@@ -51,6 +51,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 
 my_font = pygame.font.SysFont('verdana', 30) 
+bigaboom = pygame.font.SysFont('verdana', 70) 
 
 text = black
 back = white
@@ -156,20 +157,18 @@ while running:
             prediction = model.predict([np.asarray(data_aux)])
 
             predicted_character = labels_dict[int(prediction[0])]
-            cv2.rectangle(frame, (x1, y1 - 45), (x1 + 45, y1), (255, 255, 255), -1)            
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
-            cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_COMPLEX, 1.3, (0, 0, 0), 3,
-                            cv2.LINE_AA)
 
         screen.fill((back)) 
 
-        frame_py = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame_py = np.rot90(frame_py)
+        frame_py = np.rot90(frame_rgb)
         fra = pygame.surfarray.make_surface(frame_py)
         fra = pygame.transform.scale(fra, (640, 480)) 
         fra = pygame.transform.flip(fra, True, False) 
         screen.blit(fra, (0,0))
-
+        pygame.draw.rect(screen, back, pygame.Rect(10, 10, 70, 75))
+        screen.blit(bigaboom.render(predicted_character, False, (text)), (12,0))
+        
+                         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
