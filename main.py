@@ -10,11 +10,11 @@ pygame.mixer.init()
 
 theme = 0
 
-HEIGHT = 500
-WIDTH = 100
+HEIGHT = 650
+WIDTH = 170
 screen = pygame.display.set_mode((HEIGHT, WIDTH))
 clock = pygame.time.Clock()
-pygame.display.set_caption('Нейрожест Beta 0.96')
+pygame.display.set_caption('Нейрожест Pre-Release')
 icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
 FPS = 30
@@ -44,13 +44,18 @@ letcount = 0
 word = 0
 letf = 0
 progress = []
+
 fl = False
+oldmode = False
+zerk = False
+
 astra = (197, 121, 255)
 astratext = (197, 255, 100)
 white = (255, 255, 255)
 black = (0, 0, 0)
 
 my_font = pygame.font.SysFont('verdana', 30) 
+bigaboom = pygame.font.SysFont('verdana', 70) 
 
 text = black
 back = white
@@ -85,6 +90,10 @@ while settings:
                     theme = 1
                 case pygame.K_f:
                     fl = True
+                case pygame.K_b:
+                    oldmode = True
+                case pygame.K_v:
+                    zerk = True
                 case pygame.K_ESCAPE:
                     settings = False
                     running = True
@@ -92,7 +101,9 @@ while settings:
     screen.fill(back)
     screen.blit(my_font.render('0 - 5 - Выбор камеры', False, (text)), (0, 0)) 
     screen.blit(my_font.render('Нажмите ESC для продолжения', False, (text)), (0, 30))
-    screen.blit(my_font.render('Нажмите F для отзеркаливания', False, (text)), (0, 60))
+    screen.blit(my_font.render('Нажмите F для отзеркаливания камеры', False, (text)), (0, 60))
+    screen.blit(my_font.render('Нажмите B для вывода скелета', False, (text)), (0, 90))
+    screen.blit(my_font.render('Нажмите V для отзеркаливания вывода', False, (text)), (0, 120))
     pygame.display.flip()
 
 cap = cv2.VideoCapture(camnum)
@@ -156,20 +167,25 @@ while running:
             prediction = model.predict([np.asarray(data_aux)])
 
             predicted_character = labels_dict[int(prediction[0])]
-            cv2.rectangle(frame, (x1, y1 - 45), (x1 + 45, y1), (255, 255, 255), -1)            
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 0), 4)
-            cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_COMPLEX, 1.3, (0, 0, 0), 3,
-                            cv2.LINE_AA)
 
         screen.fill((back)) 
 
-        frame_py = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame_py = np.rot90(frame_py)
+        if oldmode:
+            frame_py = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame_py = np.rot90(frame_py)
+        else:
+            frame_py = np.rot90(frame_rgb)
+
+
         fra = pygame.surfarray.make_surface(frame_py)
         fra = pygame.transform.scale(fra, (640, 480)) 
-        fra = pygame.transform.flip(fra, True, False) 
+        if not zerk:
+            fra = pygame.transform.flip(fra, True, False) 
         screen.blit(fra, (0,0))
-
+        pygame.draw.rect(screen, back, pygame.Rect(10, 10, 70, 75))
+        screen.blit(bigaboom.render(predicted_character, False, (text)), (12,0))
+        
+                         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -402,7 +418,6 @@ while running:
 
         pygame.display.flip()             
     except Exception as e:
-        print(e)
         pass
 
 pygame.quit()
