@@ -14,7 +14,7 @@ HEIGHT = 650
 WIDTH = 170
 screen = pygame.display.set_mode((HEIGHT, WIDTH))
 clock = pygame.time.Clock()
-pygame.display.set_caption('Нейрожест Pre-Release')
+pygame.display.set_caption('Нейрожест v1.0')
 icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
 FPS = 30
