@@ -21,7 +21,7 @@ y_predict = model.predict(x_test)
 
 score = accuracy_score(y_predict, y_test)
 
-print('{}% of samples were classified correctly !'.format(score * 100))
+print('{} % Изображений были проклассифицированны правильно!'.format(score * 100))
 
 f = open('model.p', 'wb')
 pickle.dump({'model': model}, f)
