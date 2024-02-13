@@ -14,10 +14,10 @@ HEIGHT = 650
 WIDTH = 170
 screen = pygame.display.set_mode((HEIGHT, WIDTH))
 clock = pygame.time.Clock()
-pygame.display.set_caption('Нейрожест v1.0')
+pygame.display.set_caption('Нейрожест Pre-Release')
 icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
-FPS = 30
+FPS = 60
 running = False
 settings = True
 
@@ -38,12 +38,14 @@ word_pass = 0
 letter = "А"
 letterbin = []
 score = 0
+chtick = 0
 counter = 0
 scene_counter = 0
 letcount = 0
 word = 0
 letf = 0
 progress = []
+character = 'А'
 
 fl = False
 oldmode = False
@@ -63,9 +65,15 @@ back = white
 
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
 
-words = ['НЕТ', 'СТУЛ', 'АГА', 'ЖЕЛЕЗО', 'Я', 'ТЫ', 'ДОМ', 'ЭРА', 'ПОТОМ', 'СИЛА', 'САДИЗМ', 'РЫБА', 'РАБОТА', 'ЮНГА', 'ДУБ', 'ПАПА', 'МАМА', 'МОНО', 'СТЕРЕО', 'ВИНИЛ', 'СТВОЛ', 'ТВ', 'ФУ', 'ЦЕНТ', 'ФУНТ', 'МИЛО', 'ФМ', 'РАДИО', 'СОДА', 'ЗУБ']
+
+words = ['НЕТ', 'СТУЛ', 'АГА', 'ЖЕЛЕЗО', 'Я', 'ТЫ', 'ДОМ', 'ЭРА', 'ПОТОМ', 'СИЛА', 'САДИЗМ', 'РЫБА', 'РАБОТА', 'ЮНГА', 'ДУБ', 'ПАПА', 'МАМА', 'МОНО', 'СТЕРЕО', 'ВИНИЛ', 'СТВОЛ', 'ТВ', 'ФУ', 'ЦЕНТ', 'ФУНТ', 'МИЛО', 'ФМ', 'РАДИО', 'СОДА', 'ЗУБ', 'ГАММА', 'ГЫЧА', 'БОБС']
 
 labels_dict = {0: 'А', 1: 'Б', 2: 'В', 3: 'Г', 4: 'Д', 5: 'Е', 6: 'Ж', 7: 'З', 8: 'И', 9: 'Л', 10: 'М', 11: 'Н', 12: 'О', 13: 'П', 14: 'Р', 15: 'С', 16: 'Т', 17: 'У', 18: 'Ф',  19: 'Ц',  20: 'Ч',  21: 'Ш', 22:'Ь', 23:'Ы', 24: 'Э', 25: 'Ю', 26: 'Я'}
+
+predbin = {}
+
+for i in labels_dict:
+    predbin.update({labels_dict[i]: 0})
 
 while settings: 
     for event in pygame.event.get():
@@ -168,6 +176,27 @@ while running:
 
             predicted_character = labels_dict[int(prediction[0])]
 
+        if chtick != 7:
+            chtick += 1
+            predbin[predicted_character] += 1
+            print(predbin)
+        else:
+            chtick = 0
+
+            print(predbin)
+
+            v = list(predbin.values())
+            k = list(predbin.keys())
+            character = k[v.index(max(v))]
+
+            chtick = 0
+
+            predbin = {}
+
+            for i in labels_dict:
+                predbin.update({labels_dict[i]: 0})
+                    
+
         screen.fill((back)) 
 
         if oldmode:
@@ -183,7 +212,7 @@ while running:
             fra = pygame.transform.flip(fra, True, False) 
         screen.blit(fra, (0,0))
         pygame.draw.rect(screen, back, pygame.Rect(10, 10, 70, 75))
-        screen.blit(bigaboom.render(predicted_character, False, (text)), (12,0))
+        screen.blit(bigaboom.render(character, False, (text)), (12,0))
         
                          
         for event in pygame.event.get():
@@ -229,17 +258,17 @@ while running:
                 screen.blit(my_font.render(f'Покажите букву: {letter}', False, (text)), (650,0))     
                 screen.blit(my_font.render(f'Очки: {str(score)}', False, (text)), (650,30))   
 
-                letterbin.append(predicted_character)
+                letterbin.append(character)
 
                 for i in letterbin:
                     letcount += 1
                     if i == letter:
                         counter += 1
 
-                if letcount >= 7000:
+                if letcount >= 4000:
                     flag_pass = 2
 
-                if counter >= 500:
+                if counter >= 300:
                     flag_pass = 1
                     counter = 0
 
@@ -263,7 +292,7 @@ while running:
                     pygame.mixer.music.load("./data/no.wav") 
                     pygame.mixer.music.play()
                 screen.blit(my_font.render(f'GAME OVER', False, (text)), (900,0))     
-                letterbin.append(predicted_character)
+                letterbin.append(character)
                 screen.blit(my_font.render(f'Очки: {str(score)}', False, (text)), (900,30))   
                 scene_counter += 1
                 try:
@@ -271,7 +300,7 @@ while running:
                     success, video_image = vid.read()
                     video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
                     screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
-                    if counter >= 1000:
+                    if counter >= 600:
                         game_mode = 0
                         pygame.mixer.music.load(".\data\yes.wav") 
                         pygame.mixer.music.play()   
@@ -284,7 +313,7 @@ while running:
             letter = words[word][letf]
             if flag_pass == 0:
                 screen.blit(my_font.render(f'Покажите букву: {letter}', False, (text)), (650,0))     
-                letterbin.append(predicted_character)
+                letterbin.append(character)
                 screen.blit(my_font.render(f'Очки: {str(score)}', False, (text)), (650,30))   
                 screen.blit(my_font.render(f'Слово: {words[word]}', False, (text)), (650,60))  
                 screen.blit(my_font.render(f'Прогресс: ', False, (text)), (650,90))  
@@ -295,10 +324,10 @@ while running:
                     if i == letter:
                         counter += 1
 
-                if letcount >= 7000:
+                if letcount >= 4000:
                     flag_pass = 2
 
-                if counter >= 500:
+                if counter >= 300:
                     flag_pass = 1
                     counter = 0
 
@@ -346,7 +375,7 @@ while running:
                     success, video_image = vid.read()
                     video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
                     screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
-                    if counter >= 1000:
+                    if counter >= 600:
                         game_mode = 0
                         pygame.mixer.music.load(".\data\yes.wav") 
                         pygame.mixer.music.play()   
@@ -361,17 +390,17 @@ while running:
                 pygame.transform.scale(im, (200, 350))
                 screen.blit(im, (650, 0))
                 screen.blit(my_font.render(f'Покажите букву: {letter}', False, (text)), (860,0))     
-                letterbin.append(predicted_character)
+                letterbin.append(character)
                 screen.blit(my_font.render(f'Очки: {str(score)}', False, (text)), (860,30))   
                 for i in letterbin:
                     letcount += 1
                     if i == letter:
                         counter += 1
 
-                if letcount >= 7000:
+                if letcount >= 4000:
                     flag_pass = 2
 
-                if counter >= 500:
+                if counter >= 300:
                     flag_pass = 1
                     counter = 0
 
@@ -395,7 +424,7 @@ while running:
                     pygame.mixer.music.load("./data/no.wav") 
                     pygame.mixer.music.play()
                 screen.blit(my_font.render(f'GAME OVER', False, (text)), (900,0))     
-                letterbin.append(predicted_character)
+                letterbin.append(character)
                 screen.blit(my_font.render(f'Очки: {str(score)}', False, (text)), (900,30))   
                 scene_counter += 1
                 lettersss = list(labels_dict.values())
@@ -404,7 +433,7 @@ while running:
                     success, video_image = vid.read()
                     video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
                     screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
-                    if counter >= 1000:
+                    if counter >= 600:
                         game_mode = 0
                         pygame.mixer.music.load(".\data\yes.wav") 
                         pygame.mixer.music.play()   
