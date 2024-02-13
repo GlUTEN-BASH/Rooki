@@ -356,12 +356,12 @@ while running:
             if flag_pass == 2:
                 for i in letterbin:
                     if i == letter:
-                        counter += 1
-
+                        counter += 1     
                 if scene_counter == 0:
                     vid = cv2.VideoCapture(f"./data/{letter}.mp4")
                     pygame.mixer.music.load("./data/no.wav") 
                     pygame.mixer.music.play()
+                letterbin.append(character)
                 screen.blit(my_font.render(f'GAME OVER', False, (text)), (900,0))     
                 screen.blit(my_font.render(f'Очки: {str(score)}', False, (text)), (900,30))   
                 scene_counter += 1
