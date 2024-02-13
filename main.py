@@ -179,11 +179,8 @@ while running:
         if chtick != 7:
             chtick += 1
             predbin[predicted_character] += 1
-            print(predbin)
         else:
             chtick = 0
-
-            print(predbin)
 
             v = list(predbin.values())
             k = list(predbin.keys())
