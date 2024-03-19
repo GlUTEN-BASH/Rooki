@@ -243,6 +243,7 @@ while running:
             flag_pass = 0
             letter = "А"
             letterbin = []
+            progress = []
             score = 0
             counter = 0
             scene_counter = 0
@@ -262,10 +263,10 @@ while running:
                     if i == letter:
                         counter += 1
 
-                if letcount >= 4000:
+                if letcount >= 7000:
                     flag_pass = 2
 
-                if counter >= 300:
+                if counter >= 500:
                     flag_pass = 1
                     counter = 0
 
@@ -297,7 +298,7 @@ while running:
                     success, video_image = vid.read()
                     video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
                     screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
-                    if counter >= 600:
+                    if counter >= 500:
                         game_mode = 0
                         pygame.mixer.music.load(".\data\yes.wav") 
                         pygame.mixer.music.play()   
@@ -321,10 +322,10 @@ while running:
                     if i == letter:
                         counter += 1
 
-                if letcount >= 4000:
+                if letcount >= 7000:
                     flag_pass = 2
 
-                if counter >= 300:
+                if counter >= 500:
                     flag_pass = 1
                     counter = 0
 
@@ -372,7 +373,7 @@ while running:
                     success, video_image = vid.read()
                     video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
                     screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
-                    if counter >= 600:
+                    if counter >= 500:
                         game_mode = 0
                         pygame.mixer.music.load(".\data\yes.wav") 
                         pygame.mixer.music.play()   
@@ -394,10 +395,10 @@ while running:
                     if i == letter:
                         counter += 1
 
-                if letcount >= 4000:
+                if letcount >= 7000:
                     flag_pass = 2
 
-                if counter >= 300:
+                if counter >= 500:
                     flag_pass = 1
                     counter = 0
 
@@ -430,7 +431,7 @@ while running:
                     success, video_image = vid.read()
                     video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
                     screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
-                    if counter >= 600:
+                    if counter >= 500:
                         game_mode = 0
                         pygame.mixer.music.load(".\data\yes.wav") 
                         pygame.mixer.music.play()   
