@@ -6,6 +6,7 @@
 Машинное зрение написано [по этому туториалу](https://github.com/computervisioneng/sign-language-detector-python)
 
 ## Установка библиотек перед запуском
+### ПРИЛОЖЕНИЕ НАПИСАНО НА PYTHON 3.11
 ```
 py -m pip install -r requirements.txt
 ```
