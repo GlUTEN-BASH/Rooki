@@ -8,6 +8,7 @@ import numpy as np
 
 data_dict = pickle.load(open('./data.pickle', 'rb'))
 
+print(data_dict['data'])
 data = np.asarray(data_dict['data'])
 labels = np.asarray(data_dict['labels'])
 
