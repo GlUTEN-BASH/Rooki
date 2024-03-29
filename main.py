@@ -42,6 +42,7 @@ chtick = 0
 counter = 0
 scene_counter = 0
 letcount = 0
+grcount = 0
 word = 0
 letf = 0
 progress = []
@@ -54,6 +55,7 @@ zerk = False
 astra = (197, 121, 255)
 astratext = (197, 255, 100)
 white = (255, 255, 255)
+green = (0, 255, 0)
 black = (0, 0, 0)
 
 my_font = pygame.font.SysFont('verdana', 30) 
@@ -250,9 +252,11 @@ while running:
             letcount = 0             
             word = 0     
             letf = 0
+            back = white
 
         if game_mode == 1:
             if flag_pass == 0:
+                
                 screen.blit(my_font.render(f'Покажите букву: {letter}', False, (text)), (650,0))     
                 screen.blit(my_font.render(f'Очки: {str(score)}', False, (text)), (650,30))   
 
@@ -263,6 +267,9 @@ while running:
                     if i == letter:
                         counter += 1
 
+                if letcount >= 100:
+                    back = white
+
                 if letcount >= 7000:
                     flag_pass = 2
 
@@ -271,6 +278,7 @@ while running:
                     counter = 0
 
             if flag_pass == 1:
+                back = green
                 pygame.mixer.music.load(".\data\yes.wav") 
                 pygame.mixer.music.play()
                 letter = labels_dict[randint(0, 26)]
@@ -322,6 +330,10 @@ while running:
                     if i == letter:
                         counter += 1
 
+
+                if letcount >= 100:
+                    back = white
+
                 if letcount >= 7000:
                     flag_pass = 2
 
@@ -332,6 +344,7 @@ while running:
             if flag_pass == 1:
                 pygame.mixer.music.load(".\data\yes.wav") 
                 pygame.mixer.music.play()
+                back = green
                 if letf >= len(words[word]) - 1:
                     letf = 0
                     flag_pass = 0
@@ -395,6 +408,10 @@ while running:
                     if i == letter:
                         counter += 1
 
+
+                if letcount >= 100:
+                    back = white
+
                 if letcount >= 7000:
                     flag_pass = 2
 
@@ -403,6 +420,7 @@ while running:
                     counter = 0
 
             if flag_pass == 1:
+                back = green
                 pygame.mixer.music.load(".\data\yes.wav") 
                 pygame.mixer.music.play()
                 letter = labels_dict[randint(0, 26)]
