@@ -4,9 +4,11 @@
 Нейрожест - Простой тренажер для изучения языка жестов (Конкретно Дактиля) на базе машинного зрения 
 
 Машинное зрение написано [по этому туториалу](https://github.com/computervisioneng/sign-language-detector-python)
+Версия Python - 3.11
 
+[СКАЧАТЬ ИСПОЛНЯЕМУЮ ВЕРСИЮ](https://drive.google.com/file/d/1IX5ElQgQeSBSL8LRXZLVSIEWF11Rn9A-/view?usp=sharing)
 ## Установка библиотек перед запуском
-### ПРИЛОЖЕНИЕ НАПИСАНО НА PYTHON 3.11
+
 ```
 py -m pip install -r requirements.txt
 ```
