@@ -68,10 +68,9 @@ back = white
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
 
 
-words = ['НЕТ', 'СТУЛ', 'АГА', 'ЖЕЛЕЗО', 'Я', 'ТЫ', 'ДОМ', 'ЭРА', 'ПОТОМ', 'СИЛА', 'САДИЗМ', 'РЫБА', 'РАБОТА', 'ЮНГА', 'ДУБ', 'ПАПА', 'МАМА', 'МОНО', 'СТЕРЕО', 'ВИНИЛ', 'СТВОЛ', 'ТВ', 'ФУ', 'ЦЕНТ', 'ФУНТ', 'МИЛО', 'ФМ', 'РАДИО', 'СОДА', 'ЗУБ', 'ГАММА', 'ГЫЧА', 'БОБС']
+words = ['СТУЛ', 'АГА', 'ЖЕЛЕЗО', 'Я', 'ТЫ', 'ДОМ', 'ЭРА', 'ПОТОМ', 'СИЛА', 'САДИЗМ', 'РЫБА', 'РАБОТА', 'ЮНГА', 'ДУБ', 'ПАПА', 'МАМА', 'МОНО', 'СТЕРЕО', 'ВИНИЛ', 'СТВОЛ', 'ТВ', 'ФУ', 'ЦЕНТ', 'ФУНТ', 'МИЛО', 'ФМ', 'РАДИО', 'СОДА', 'ЗУБ', 'ГАММА', 'СЬЕМ', 'ЁЖИК', 'КАША', 'ЮБКА', 'ВЪЕЗД']
 
-labels_dict = {0: 'А', 1: 'Б', 2: 'В', 3: 'Г', 4: 'Д', 5: 'Е', 6: 'Ж', 7: 'З', 8: 'И', 9: 'Л', 10: 'М', 11: 'Н', 12: 'О', 13: 'П', 14: 'Р', 15: 'С', 16: 'Т', 17: 'У', 18: 'Ф',  19: 'Ц',  20: 'Ч',  21: 'Ш', 22:'Ь', 23:'Ы', 24: 'Э', 25: 'Ю', 26: 'Я'}
-
+labels_dict = {0: 'А', 1: 'Б', 2: 'В', 3: 'Г', 4: 'Д', 5: 'Е', 6: 'Ж', 7: 'З', 8: 'И', 9: 'Л', 10: 'М', 11: 'Н', 12: 'О', 13: 'П', 14: 'Р', 15: 'С', 16: 'Т', 17: 'У', 18: 'Ф',  19: 'Ц',  20: 'Ч',  21: 'Ш', 22:'Ь', 23:'Ы', 24: 'Э', 25: 'Ю', 26: 'Я', 27: 'К', 28: 'К', 29:'Й', 30: 'Ъ', 31: 'Ь', 32: 'Х', 33: 'Ё'}
 predbin = {}
 
 for i in labels_dict:
@@ -281,7 +280,7 @@ while running:
                 back = green
                 pygame.mixer.music.load(".\data\yes.wav") 
                 pygame.mixer.music.play()
-                letter = labels_dict[randint(0, 26)]
+                letter = labels_dict[randint(0, 33)]
                 flag_pass = 0
                 score += 1
                 counter = 0
@@ -305,7 +304,7 @@ while running:
                     letfps = vid.get(cv2.CAP_PROP_FPS)
                     success, video_image = vid.read()
                     video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
-                    screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
+                    screen.blit(pygame.transform.scale(video_surf, (640, 480)), (640, 0))
                     if counter >= 500:
                         game_mode = 0
                         pygame.mixer.music.load(".\data\yes.wav") 
@@ -385,7 +384,7 @@ while running:
                     letfps = vid.get(cv2.CAP_PROP_FPS)
                     success, video_image = vid.read()
                     video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
-                    screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
+                    screen.blit(pygame.transform.scale(video_surf, (640, 480)), (640, 0))
                     if counter >= 500:
                         game_mode = 0
                         pygame.mixer.music.load(".\data\yes.wav") 
@@ -423,7 +422,7 @@ while running:
                 back = green
                 pygame.mixer.music.load(".\data\yes.wav") 
                 pygame.mixer.music.play()
-                letter = labels_dict[randint(0, 26)]
+                letter = labels_dict[randint(0, 33)]
                 flag_pass = 0
                 score += 1
                 counter = 0
@@ -448,7 +447,7 @@ while running:
                     letfps = vid.get(cv2.CAP_PROP_FPS)
                     success, video_image = vid.read()
                     video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
-                    screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
+                    screen.blit(pygame.transform.scale(video_surf, (640, 480)), (640, 0))
                     if counter >= 500:
                         game_mode = 0
                         pygame.mixer.music.load(".\data\yes.wav") 
@@ -459,7 +458,7 @@ while running:
         if game_mode == 3:
             success, video_image = tutorial.read()
             video_surf = pygame.image.frombuffer(video_image.tobytes(), video_image.shape[1::-1], "BGR")
-            screen.blit(pygame.transform.scale(video_surf, (250, 450)), (640, 0))
+            screen.blit(pygame.transform.scale(video_surf, (640, 480)), (640, 0))
 
         pygame.display.flip()             
     except Exception as e:
